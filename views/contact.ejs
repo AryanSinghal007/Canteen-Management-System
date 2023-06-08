@@ -1,0 +1,117 @@
+<%- include("partials/header"); -%>
+
+<style>
+    .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .contact-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .contact-heading {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        font-family: 'Montserrat', sans-serif;
+
+    }
+
+    .card {
+        width: 100%;
+        max-width: 500px;
+        background-color: #f5c48f;
+        border-radius: 5px;
+        padding: 40px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-group textarea {
+        height: 150px;
+    }
+
+    .submit-button {
+        padding: 10px 30px;
+        font-size: 1rem;
+        background-color: #F1A250;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 7.25rem;
+    }
+
+    .submit-button:hover {
+        background-color: #e0b16b;
+    }
+
+    .contact-image {
+        flex: 1;
+        text-align: center;
+    }
+
+    .contact-image img {
+        max-width: 150%;
+        width: 130%;
+        height: auto;
+        border-radius: 5px;
+    }
+</style>
+
+<section id="contact-us">
+    <div class="contact-container">
+        <div class="contact-content">
+            <h2 class="contact-heading">CONTACT US</h2>
+            <div class="card">
+                <form class="contact-form" action="/contact" method="POST">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter Your E-Mail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Enter Your Message" required></textarea>
+                    </div>
+                    <button class="submit-button" onclick="myfunc()"  type="submit">Send Message</button>
+
+                </form>
+            </div>
+        </div>
+        <div class="contact-image">
+            <img src="images/contact-us.jpg" alt="Contact Image">
+        </div>
+    </div>
+</section>
+
+
+
+<%- include("partials/footer"); -%>

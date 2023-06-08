@@ -1,0 +1,158 @@
+<%- include("partials/header"); -%>
+
+<style>
+    .inventory-grid-items {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .card {
+        background-color: #f5c48f;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        height: 20rem;
+        width: 12rem;
+        text-align: center;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 1px 8px 20px grey;
+        -webkit-transition:  box-shadow .6s ease-in;
+    }
+
+    .card img {
+        max-width: 85%;
+        margin-bottom: 10px;
+    }
+
+    .card h1 {
+        font-size: 1.75rem;
+        margin-bottom: 5px;
+    }
+
+    .card h2 {
+        font-size: 1.2rem;
+        color: black;
+        margin-bottom: 10px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #555555;
+        font-size: 1rem;
+    }
+
+    .form-group input[type="text"] {
+        width: 25%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .form-group input[type="text"]:focus {
+        outline: none;
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .btn {
+        height: 3rem;
+        width: 13rem;
+        display: inline-block;
+        font-weight: 400;
+        color: #212529;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-color: #f5c48f;
+        border: 1px solid #f5c48f;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-left: 43.4%;
+        margin-top: 4%;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+            box-shadow 0.15s ease-in-out;
+    }
+
+    .btn:hover {
+        color: #212529;
+        background-color: #eeb864;
+        border-color: #eeb864;
+    }
+    .form-group input::placeholder {
+        text-align: center;
+    }
+
+    .btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(238, 184, 100, 0.5);
+    }
+
+</style>
+<h1 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Order Now</h1>
+<section id="food-grid-items" style="margin-bottom: 5rem;">
+    <form action="/order" method="post">
+        <div class="form-group">
+            <br>
+            <!-- <label for="name">Enter your Name</label> -->
+            <!-- <input style="border-color: rgb(15, 13, 13); margin-left: 37.5%;" type="text" id="name" name="Name" placeholder="Enter Your Name"> -->
+        </div>
+        <% let hashmap = {}; %>
+        <div class="container inventory-grid-items">
+            <% fooditems.forEach(function(fooditem) { %>
+                <div class="card">
+                    <img src="images/<%= fooditem.foodName %>.png" alt="image cant be loaded" style="margin: auto">
+                    <h1><%= fooditem.foodName %></h1>
+                    <h1><%= fooditem.foodPrice %>₹</h1>
+
+                    <!-- <label>Quantity</label> -->
+                    <input style="border-color: #f5c48f;" type="number" placeholder="Quantity" min="0" max="10" name="foodQuantity" oninput="updateHashmap(this, '<%= fooditem.foodName %>')">
+                </div>
+            <% }); %>
+        </div>
+        <!-- Include a hidden input field for the hashmap data -->
+        <input type="hidden" id="hashmapField" name="hashmap" value="">
+        <button type="submit" class="btn">SUBMIT</button>
+    </form>
+</section>
+
+<script>
+    const hashmap = {};
+
+    function updateHashmap(input, foodName) {
+        const quantity = input.value;
+        hashmap[foodName] = quantity;
+        // console.log(hashmap); // Optional: Display the updated hashmap in the console
+        document.getElementById("hashmapField").value = JSON.stringify(hashmap);
+    }
+</script>
+<%- include("partials/footer"); -%>

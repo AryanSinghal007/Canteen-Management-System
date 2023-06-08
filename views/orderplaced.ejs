@@ -1,0 +1,160 @@
+<%- include("partials/header"); -%>
+
+<style>
+  /* body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    padding: 20px;
+  } */
+
+  h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+
+
+  /* Styling for the receipt */
+  .receipt {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px 20px 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    max-width: 600px; /* Adjust the maximum width as needed */
+    width: 100%;
+
+  }
+
+  .receipt h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .receipt p {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .receipt ul {
+    margin-bottom: 10px;
+  }
+
+  .receipt li {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .receipt strong {
+    font-weight: bold;
+  }
+
+  .receipt .ordered-items {
+    margin-top: 10px;
+  }
+
+  .receipt table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  .receipt th,
+  .receipt td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* PDF-like look */
+  .receipt::before,
+  .receipt::after {
+    content: "";
+    display: block;
+    height: 10px;
+    background-color: #ddd;
+    position: absolute;
+  }
+
+  .receipt::before {
+    top: -10px;
+    left: -10px;
+    right: -10px;
+  }
+
+  .receipt::after {
+    bottom: -10px;
+    left: -10px;
+    right: -10px;
+  }
+
+  .receipt::before,
+  .receipt::after,
+  .receipt h1,
+  .receipt p,
+  .receipt ul,
+  .receipt li {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+
+<div class="receipt">
+  <h1>Order Placed</h1>
+  <p>Thank you for your order! Your order has been placed successfully.</p>
+  <p>Order details:</p>
+  <ul>
+    <li><strong>Name:</strong> <%= UserName %></li>
+    <li><strong>Roll Number:</strong> <%= rollNo %></li>
+    <li><strong>Time:</strong> <%= new Date().toLocaleString() %></li>
+    <li><strong>Ordered Items:</strong></li>
+  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Food Name</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% Object.keys(mapping).forEach(function(key) { %>
+        <% if (mapping[key] > 0) { %>
+          <tr>
+            <td><%= key %></td>
+            <td><%= mapping[key] %> </td>
+          </tr>
+        <% } %>
+      <% }) %>
+    </tbody>
+  </table>
+  <br>
+  <p>Collect your meal after 30 minutes of ordering!</p>
+  <p>Pay while receiving the order at counter !</p>
+  <p>Thank you for your support !</p>
+</div>
+<%- include("partials/footer"); -%>

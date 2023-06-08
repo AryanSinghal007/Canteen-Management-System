@@ -1,0 +1,14 @@
+<%- include("partials/header"); -%>
+    <h1 style="margin-bottom: 3rem; text-align: center;">Add Your Inventory</h1>
+    <form action="/addInventory" method="post">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <label style="text-align: center;">Food Name</label>
+            <input type="text" name="foodName" placeholder="Food Name">
+            <label style="text-align: center;">Quantity</label>
+            <input type="number" name="foodQuantity" placeholder="Food Quantity">
+            <label style="text-align: center;">Price</label>
+            <input type="number" name="foodPrice" placeholder="Food Price">
+        </div>
+        <button style="margin-left: auto; margin-right: auto; margin-top: 2rem; margin-bottom: 3rem; display: block;background-color: #f5c48f; color: black;" type="submit" class="btn btn-primary" name="button">Add Items</button>
+    </form>
+<%- include("partials/footer"); -%>

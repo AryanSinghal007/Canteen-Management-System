@@ -1,0 +1,180 @@
+/* html {
+    min-height: 100%;
+    position: relative;
+  }
+  
+  .container-fluid {
+      padding-top: 70px;
+      padding-bottom: 70px;
+  }
+  .navbar {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border: 0;
+      border-radius: 0;
+      margin-bottom: 0;
+      font-size: 12px;
+      letter-spacing: 5px;
+  }
+  .navbar-nav  li a:hover {
+      color: #1abc9c !important;
+  }
+  
+  .footer-padding {
+      padding-bottom: 60px;
+  }
+  
+  .footer {
+      position: absolute;
+      text-align: center;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #1abc9c;
+  }
+  
+  .footer p {
+      margin-top: 25px;
+      font-size: 12px;
+    color: #fff;
+  }
+   */
+
+
+body{
+    font-family: 'Montserrat', sans-serif;
+}
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Montserrat-bold', sans-serif;
+}
+p{
+    color: #8f8f8f;
+    font-family: 'Montserrat-thin', sans-serif;
+}
+.heading-para{
+    font-size: 1.5rem;
+}
+.row-home{
+    background-color: white;
+    margin-bottom: 5%;
+}
+/* /headings/ */
+.big-heading{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1.5;
+}
+
+
+#title{
+    background-color: #F1A250;
+    color: #fff;
+    border-radius: 75px 75px 75px 75px;
+}
+
+.nav-box{
+    padding: 0.5% 1%;
+}
+.heading-box{
+    margin-top: 5%;
+}
+.donate-img{
+    width: 700px;
+    height: auto
+}
+
+.balle{
+    width: 700px;
+    height: 590px;
+    margin-top: -2.5rem;
+    margin-left: 3.5rem;
+}
+
+.navbar-brand{
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+.nav-item{
+    padding: 0 18px;
+}
+.nav-link{
+    font-size: 1.2rem;
+    font-family: 'Montserrat-thin', sans-serif;
+}
+
+/* /Download Buttons/ */
+.download-button{
+    margin: 7% 3% 5% 0;
+}
+
+/* /features section/ */
+#features{
+    padding: 7% 15%;
+/background-color: white;/
+/position: relative;/
+/z-index: 1;/
+}
+.feature-box{
+    text-align: center;
+    padding: 5%;
+}
+.icon{
+    color: #FAAF40;
+    margin-bottom: 1rem;
+}
+.icon:hover{
+    color: orange;
+}
+
+footer{
+    padding: 0 15%;
+    text-align: center;
+    background-color: #F1A250;
+    color: #fff;
+}
+@media (max-width: 1028px) {
+    #title {
+        text-align: center;
+    }
+}
+
+.inventory-heading{
+    font-size: 1.75rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.inventory-grid-title{
+    display: grid;
+    width: auto;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 5%;
+}
+.inventory-grid-items{
+    display: grid;
+    width: auto;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.element-title{
+    height: 100px;
+    background-color:#eda75b ;
+    text-align: center;
+    padding-top: 6%;
+
+}
+.element{
+    height: 150px;
+    text-align: center;
+}
+
+#footer{
+    padding: 1% 15%;
+    text-align: center;
+}
+.social-icon{
+    margin: 20px 10px;
+    color: black;
+}
