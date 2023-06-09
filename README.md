@@ -13,7 +13,7 @@ This is a Canteen Management System designed specifically for the students of Ne
 
 - User Authentication and Authorization: The system implements user authentication and authorization mechanisms using MD5 encryption to ensure secure access to the system's features. This helps in protecting user information and maintaining the privacy of the system.
 
-<img width = 300 height = 220 alt="image1" src="https://github.com/AryanSinghal007/Canteen-Management-System/assets/130309685/bd1a2966-1325-4768-9973-ff71a068fbdf"> <img width = 300 height = 220 alt="image2" src="https://github.com/AryanSinghal007/Canteen-Management-System/assets/130309685/06dcbef3-8406-4978-ae40-14eb2298307d"> <img width = 300 height = 220 alt="image3" src="https://github.com/AryanSinghal007/Canteen-Management-System/assets/130309685/39794d39-2b54-4f6c-b4f4-3ddf80428858">
+<img width = 250 height = 180 alt="image1" src="https://github.com/AryanSinghal007/Canteen-Management-System/assets/130309685/bd1a2966-1325-4768-9973-ff71a068fbdf"> <img width = 250 height = 180 alt="image2" src="https://github.com/AryanSinghal007/Canteen-Management-System/assets/130309685/06dcbef3-8406-4978-ae40-14eb2298307d"> <img width = 250 height = 180 alt="image3" src="https://github.com/AryanSinghal007/Canteen-Management-System/assets/130309685/39794d39-2b54-4f6c-b4f4-3ddf80428858">
 
 
 ## Installation and Setup Instructions
