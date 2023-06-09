@@ -3,6 +3,8 @@
 The Canteen Management System is a web-based application designed to streamline the ordering and payment process for college students. It provides a convenient way for students to order their meals from the Student Centre canteen at Netaji Subhas University of Technology. By using this system, students no longer have to wait in long queues at the canteen. They can simply place their orders online, make the payment, and collect their meals when ready.
 This is a Canteen Management System designed specifically for the students of Netaji Subhas University of Technology.
 
+[Website Link](https://canteen-management-system-wwqv.onrender.com)
+
 ## Technologies Used
 
 - Frontend UI: The user interface is designed using HTML, CSS, and Bootstrap to provide an intuitive and visually appealing experience for the users.
