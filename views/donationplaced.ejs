@@ -1,0 +1,100 @@
+<%- include("partials/header"); -%>
+
+<style>
+    /* Your existing CSS styles */
+
+    .receipt {
+        background-color: #fff;
+        border: 2px solid #000;
+        padding: 20px;
+        margin: 0 auto;
+        max-width: 600px; /* Adjust the maximum width as needed */
+        width: 100%;
+    }
+
+    .receipt h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .receipt p {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .receipt ul {
+        margin-bottom: 20px;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .receipt li {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .receipt strong {
+        font-weight: bold;
+    }
+
+    .receipt table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .receipt th,
+    .receipt td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .receipt th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .receipt .total-row {
+        font-weight: bold;
+    }
+
+    .receipt .total-row td {
+        padding-top: 15px;
+        border-top: 2px solid #000;
+    }
+</style>
+
+<div class="receipt">
+    <h1>Donation Receipt for Tax Exemption</h1>
+    <p>Thank you for your donation !</p>
+    <ul>
+        <li><strong>Name:</strong> <%= UserName %></li>
+        <li><strong>Order Type:</strong> <%= rollNo %></li>
+        <li><strong>Time:</strong> <%= new Date().toLocaleString() %></li>
+    </ul>
+    <table>
+        <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% Object.keys(mapping).forEach(function(key) { %> <% if (mapping[key] >
+                0) { %>
+            <tr>
+                <td><%= key %></td>
+                <td><%= mapping[key] %></td>
+            </tr>
+        <% } %> <% }) %>
+        </tbody>
+    </table>
+    <p>Your order will be donated successfully</p>
+    <p>Rider will donate on your behalf!</p>
+    <p>Thank you for your support!</p>
+</div>
+
+<%- include("partials/footer"); -%>
