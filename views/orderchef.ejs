@@ -1,0 +1,153 @@
+<%- include("partials/headerchef"); -%>
+<style>
+    .maintable {
+        margin-left: 10rem;
+        margin-bottom: 4rem;
+        margin-top: 4rem;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    table {
+        width: 90%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    input[type="checkbox"] {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        transform: scale(1.5);
+        color: green;
+    }
+    /* Customize checkbox appearance */
+    input[type="checkbox"] {
+        -webkit-appearance: none; /* Remove default appearance */
+        -moz-appearance: none;
+        appearance: none;
+        width: 25px; /* Set width and height */
+        height: 25px;
+        border: 2px solid #555555; /* Set border color */
+        border-radius: 5px; /* Round the corners */
+        position: relative;
+    }
+
+    /* Style the checked state */
+    input[type="checkbox"]:checked {
+        background-color: #f5c48f; /* Set background color when checked */
+    }
+
+    /* Create 3D effect */
+    input[type="checkbox"]:before {
+        content: ""; /* Create pseudo-element */
+        position: absolute;
+        top: 3px; /* Adjust vertical position */
+        left: 3px; /* Adjust horizontal position */
+        width: 15px; /* Set width and height */
+        height: 15px;
+        background-color: #ffffff; /* Set background color */
+        border-radius: 3px; /* Round the corners */
+    }
+
+    /* Style the checked state for the pseudo-element */
+    input[type="checkbox"]:checked:before {
+        background-color: #f5c48f; /* Set background color when checked */
+    }
+
+    .innertable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .innertable th,
+    .innertable td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .innertable th {
+        background-color: #333;
+        color: #fff;
+    }
+</style>
+
+<h1>ALL ORDERS</h1>
+
+<div class="maintable">
+    <table>
+        <thead>
+        <tr>
+            <th style="text-align: center">Name</th>
+            <th style="text-align: center">Items and Quantity</th>
+            <th style="text-align: center">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% orders.forEach((order) => { %> <% const hashmapField =
+                order.hashmapField; %>
+        <tr>
+            <td style="text-align: center"><%= order.username %></td>
+            <td>
+                <table class="innertable">
+                    <thead>
+                    <tr></tr>
+                    </thead>
+                    <tbody>
+                    <% for (const [item, quantity] of hashmapField) { %>
+                        <tr>
+                            <td style="text-align: center"><%= item %></td>
+                            <td style="text-align: center"><%= quantity %></td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </td>
+
+            <td>
+                <form
+                        action="/orderchef"
+                        method="POST"
+                        value="<%= order._id %>"
+                        id="deleteForm"
+                >
+                    <input type="hidden" name="orderId" value="<%= order._id %>" />
+                    <input
+                            type="checkbox"
+                            name="orderId"
+                            value="<%= order._id %>"
+                            onchange="submitForm()"
+                    />
+                </form>
+            </td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function submitForm() {
+        document.getElementById("deleteForm").submit();
+    }
+</script>
+
+<%- include("partials/footer"); -%>
