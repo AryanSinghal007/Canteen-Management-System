@@ -1,33 +1,45 @@
-
+//jshint esversion:6
 //IMPORT MODULES
-require('dotenv').config();
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const _ = require("lodash");
-const { time } = require("console");
+const { time, log } = require("console");
 const app = express();
-const md5 = require('md5');
+const md5 = require("md5");
 const session = require("express-session");
+require("dotenv").config();
 
-app.use(session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: true
-}));
+// app.use(session({
+//   secret: "vidyanjghal",
+//   resave: false,
+//   saveUninitialized: true
+// }));
 
-app.set('view engine', 'ejs');
+app.use(
+    session({
+        secret: process.env.SECRET,
+        resave: false,
+        saveUninitialized: true,
+    })
+);
+
+app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect(`mongodb+srv://finstop:${process.env.MONGO_PASSWORD}@cluster0.d7sp04r.mongodb.net/canteenDB`, { useNewUrlParser: true, useUnifiedTopology: true });
-
+mongoose.connect(
+    `mongodb+srv://finstop:${process.env.MONGO_PASSWORD}@cluster0.d7sp04r.mongodb.net/canteenDB`,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+);
+// mongoose.connect("mongodb+srv://finstop:apnafinstop@cluster0.d7sp04r.mongodb.net/canteenDB", { useNewUrlParser: true, useUnifiedTopology: true })
 //Mongoose db
 const inventorySchema = {
     foodName: String,
     foodQuantity: Number,
-    foodPrice: Number
+    foodPrice: Number,
 };
 
 const MySchema = new mongoose.Schema({
@@ -41,30 +53,28 @@ const MySchema = new mongoose.Schema({
 const authSchema = new mongoose.Schema({
     nameauth: String,
     rollno: { type: String, unique: true },
-    password: String
+    password: String,
 });
 
 const contactSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
-        required: true
+        required: true,
     },
     message: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
 });
 
-
-const Contact = mongoose.model('Contact', contactSchema);
+const Contact = mongoose.model("Contact", contactSchema);
 const userOrder = mongoose.model("userOrder", MySchema);
 const fooditem = mongoose.model("fooditem", inventorySchema);
 const authuser = mongoose.model("authuser", authSchema);
-
 
 function requireLogin(req, res, next) {
     // Check if the user is logged in
@@ -93,7 +103,8 @@ app.post("/register", function (req, res) {
     const rollNo = req.body.rollNo;
     const password = md5(req.body.password); // Hash the password
 
-    authuser.findOne({ rollno: rollNo })
+    authuser
+        .findOne({ rollno: rollNo })
         .then((existingUser) => {
             if (existingUser) {
                 // Redirect to the register page with an error message
@@ -103,10 +114,11 @@ app.post("/register", function (req, res) {
                 const user = new authuser({
                     nameauth: name,
                     rollno: rollNo,
-                    password: password
+                    password: password,
                 });
 
-                user.save()
+                user
+                    .save()
                     .then(() => {
                         res.redirect("/login");
                     })
@@ -126,7 +138,8 @@ app.post("/login", function (req, res) {
     const rollNo = req.body.rollNo;
     const password = md5(req.body.password); // Hash the password
 
-    authuser.findOne({ rollno: rollNo, password: password })
+    authuser
+        .findOne({ rollno: rollNo, password: password })
         .then((user) => {
             if (user) {
                 // Assuming authentication is successful
@@ -148,7 +161,8 @@ app.get("/home", requireLogin, function (req, res) {
 });
 
 app.get("/menu", requireLogin, function (req, res) {
-    fooditem.find({})
+    fooditem
+        .find({})
         .then((fooditems) => {
             res.render("menu", {
                 fooditems: fooditems,
@@ -164,10 +178,7 @@ app.get("/order", requireLogin, function (req, res) {
     let fooditems;
     let userOrders;
 
-    Promise.all([
-        fooditem.find({}),
-        userOrder.find({})
-    ])
+    Promise.all([fooditem.find({}), userOrder.find({})])
         .then(([fooditemsarr, userOrdersarr]) => {
             fooditems = fooditemsarr;
             userDonates = userOrdersarr;
@@ -176,11 +187,10 @@ app.get("/order", requireLogin, function (req, res) {
                 fooditems: fooditems,
                 userDonates: userOrders,
                 UserName: req.session.user.name, // Pass the user's name to the template
-                rollNo: req.session.user.rollno // Pass the roll number to the template
+                rollNo: req.session.user.rollno, // Pass the roll number to the template
             });
-
         })
-        .catch(error => {
+        .catch((error) => {
             console.log(error);
             res.status(500).send("Error retrieving data");
         });
@@ -200,22 +210,24 @@ app.post("/order", function (req, res) {
     }
 
     // Get the user details from the authuser collection
-    authuser.findOne({ _id: req.session.user._id })
-        .then(user => {
+    authuser
+        .findOne({ _id: req.session.user._id })
+        .then((user) => {
             const UserName = user.nameauth;
             const rollNo = user.rollno;
 
             const newUserOrder = new userOrder({
                 username: UserName,
                 rollNo: rollNo,
-                hashmapField: mapping
+                hashmapField: mapping,
             });
 
             newUserOrder.save();
             for (let key in mapping) {
                 let newQuantity;
-                fooditem.findOne({ foodName: key })
-                    .then(item => {
+                fooditem
+                    .findOne({ foodName: key })
+                    .then((item) => {
                         newQuantity = item.foodQuantity - mapping[key];
                         return fooditem.findOneAndUpdate(
                             { foodName: key },
@@ -223,17 +235,17 @@ app.post("/order", function (req, res) {
                             { new: true }
                         );
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         console.log("Error updating food quantity:", error);
                     });
             }
             res.render("orderplaced", {
                 mapping: mapping,
                 UserName: UserName,
-                rollNo: rollNo
+                rollNo: rollNo,
             });
         })
-        .catch(error => {
+        .catch((error) => {
             console.log("Error retrieving user details:", error);
             return res.status(500).send("Error retrieving user details");
         });
@@ -243,14 +255,13 @@ app.get("/contact", requireLogin, function (req, res) {
     res.render("contact");
 });
 
-
-app.post('/contact', (req, res) => {
+app.post("/contact", (req, res) => {
     const { name, email, message } = req.body;
 
     const newContact = new Contact({
         name,
         email,
-        message
+        message,
     });
 
     newContact.save();
@@ -269,16 +280,156 @@ app.post("/addInventory", function (req, res) {
     const foodItem = new fooditem({
         foodName,
         foodQuantity,
-        foodPrice
+        foodPrice,
     });
 
-    foodItem.save()
+    foodItem
+        .save()
         .then(() => {
             res.redirect("/");
         })
         .catch((error) => {
             console.log(error);
         });
+});
+
+app.get("/loginchef", function (req, res) {
+    res.render("loginchef", { errorMessage: null });
+});
+
+app.post("/loginchef", (req, res) => {
+    res.render("loginchef", { errorMessage: null });
+});
+
+//HOMECHEF NEECHE
+
+app.get("/homechef", function (req, res) {
+    res.render("homechef", { errorMessage: null });
+});
+
+app.post("/homechef", (req, res) => {
+    const chefID = req.body.chefID;
+    // console.log(chefID);
+    if (chefID == 777) {
+        res.render("homechef", { errorMessage: null });
+    } else {
+        res.render("loginchef", { errorMessage: "Invalid Chef ID" });
+    }
+});
+
+// Orders Chef
+
+const userOrdernew = mongoose.model("userOrder", MySchema);
+
+app.get("/orderchef", function (req, res) {
+    // Fetch all orders from the database
+    userOrdernew
+        .find({})
+        .then((orders) => {
+            // console.log(orders);
+            res.render("orderchef", { orders: orders });
+        })
+        .catch((error) => {
+            console.log("Error fetching orders:", error);
+            res.status(500).send("Error fetching orders");
+        });
+});
+
+app.post("/orderchef", (req, res) => {
+    const orderId = req.body.orderId;
+
+    // Delete the order from the database
+    userOrdernew
+        .findByIdAndDelete(orderId)
+        .then(() => {
+            // Send success response if needed
+            console.log("Order deleted successfully");
+            res.redirect("/orderchef"); // Redirect after successful deletion
+        })
+        .catch((error) => {
+            console.error("Error deleting order:", error);
+            res.status(500).send("Error deleting order");
+        });
+});
+
+//DONATE NOW
+app.get("/homedonate", function (req, res) {
+    let fooditems;
+    let userOrders;
+
+    Promise.all([fooditem.find({}), userOrder.find({})])
+        .then(([fooditemsarr, userOrdersarr]) => {
+            fooditems = fooditemsarr;
+            userDonates = userOrdersarr;
+
+            res.render("homedonate", {
+                fooditems: fooditems,
+                userDonates: userOrders,
+                UserName: req.session.user.name, // Pass the user's name to the template
+                rollNo: req.session.user.rollno, // Pass the roll number to the template
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).send("Error retrieving data");
+        });
+});
+
+app.post("/homedonate", (req, res) => {
+    const hashmapString = req.body.hashmap;
+    let mapping;
+
+    if (hashmapString) {
+        try {
+            mapping = JSON.parse(hashmapString);
+        } catch (error) {
+            console.log("Error parsing hashmap JSON:", error);
+            return res.status(400).send("Invalid hashmap data");
+        }
+    }
+
+    // Get the user details from the authuser collection
+    authuser
+        .findOne({ _id: req.session.user._id })
+        .then((user) => {
+            const UserName = user.nameauth;
+            const rollNo = "Donation";
+
+            const newUserOrder = new userOrder({
+                username: "Donor: " + UserName,
+                rollNo: rollNo,
+                hashmapField: mapping,
+            });
+
+            newUserOrder.save();
+            for (let key in mapping) {
+                let newQuantity;
+                fooditem
+                    .findOne({ foodName: key })
+                    .then((item) => {
+                        newQuantity = item.foodQuantity - mapping[key];
+                        return fooditem.findOneAndUpdate(
+                            { foodName: key },
+                            { $set: { foodQuantity: newQuantity } },
+                            { new: true }
+                        );
+                    })
+                    .catch((error) => {
+                        console.log("Error updating food quantity:", error);
+                    });
+            }
+            res.render("donationplaced", {
+                mapping: mapping,
+                UserName: UserName,
+                rollNo: rollNo,
+            });
+        })
+        .catch((error) => {
+            console.log("Error retrieving user details:", error);
+            return res.status(500).send("Error retrieving user details");
+        });
+
+
 });
 
 
